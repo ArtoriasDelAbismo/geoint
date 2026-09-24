@@ -46,13 +46,3 @@ its `TileMatrixSet` (e.g. `GoogleMapsCompatible_Level12`), and max zoom
 — find them in the GIBS [Visualization Product Catalog](https://gibs.earthdata.nasa.gov).
 `time: true` products take a `TIME=YYYY-MM-DD` query param (set via the
 date picker).
-
-## Gotchas learned
-
-- Cesium 1.145: `WebMapTileServiceImageryProvider` is a plain constructor
-  (`new Cesium.WebMapTileServiceImageryProvider(...)`), **not** `.fromUrl()`.
-- `CesiumTerrainProvider.fromUrl()` expects the terrain **base path**, not
-  the full `layer.json` URL.
-- GIBS returns a blank/grey tile for dates with no data — pick another day.
-- A dark globe only visible as stars in a browser usually means a JS error
-  during init; the on-screen red error box is the first thing to check.
