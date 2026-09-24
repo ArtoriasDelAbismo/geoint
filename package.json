@@ -1,0 +1,22 @@
+{
+  "name": "geoint",
+  "version": "1.0.0",
+  "description": "A zero-API-key web demo that drapes live NASA satellite imagery and a Digital Elevation Model (DEM) over real 3D terrain.",
+  "homepage": "https://github.com/ArtoriasDelAbismo/geoint#readme",
+  "bugs": {
+    "url": "https://github.com/ArtoriasDelAbismo/geoint/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtoriasDelAbismo/geoint.git"
+  },
+  "license": "MIT",
+  "author": "jeronimo",
+  "type": "module",
+  "main": "script.js",
+  "scripts": {
+    "test": "node test/smoke.mjs",
+    "dev": "npm start",
+    "start": "python3 -m http.server 8000"
+  }
+}
