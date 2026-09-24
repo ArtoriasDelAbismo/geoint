@@ -6,8 +6,11 @@ Digital Elevation Model (DEM) over real 3D terrain.
 ## Run it
 
 ```bash
-python3 -m http.server 8000
+npm start        # serves on http://localhost:8000
+npm test         # smoke test: serves the app and checks all 4 layers are configured
 ```
+
+Or, without npm: `python3 -m http.server 8000`.
 
 Open http://localhost:8000 — you should see the Grand Canyon with
 satellite imagery + elevation tints. Use the place buttons and the date /
