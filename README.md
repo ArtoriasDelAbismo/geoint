@@ -27,7 +27,7 @@ CesiumJS, NASA GIBS tiles, and global terrain straight from their CDNs.
 
 Everything is live — no imagery is downloaded or stored.
 
-## Tech stack (the parts this project teaches)
+## Tech stack
 
 - **Data**: NASA [Earthdata](https://www.earthdata.nasa.gov) / [GIBS](https://earthdata.nasa.gov/gibs) — WMTS tiled satellite imagery, no login needed. Digital elevation models: NASA SRTM, Copernicus (via OpenTopography / AWS).
 - **Processing**: Python + `rasterio`/GDAL for GeoTIFF handling; Microsoft Planetary Computer / AWS Open Data for full-resolution Landsat & Sentinel-2 scenes (not served by GIBS).
