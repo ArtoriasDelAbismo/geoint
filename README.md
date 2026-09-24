@@ -40,9 +40,9 @@ Everything is live — no imagery is downloaded or stored.
 2. GIBS WMTS tile requests are made per level: `.../wmts/epsg3857/best/wmts.cgi?TIME=2026-09-23&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&...`.
 3. Each layer is added as a Cesium `ImageryLayer`; opacity and visibility are adjustable at runtime.
 
-Layer configuration lives in the `LAYERS` array in `index.html`. To swap
+Layer configuration lives in the `LAYERS` array in `script.js`. To swap
 in any of the ~1,000+ GIBS products, drop in the product's `layer` id,
-its `TileMatrixSet` (e.g. `GoogleMapsCompatible_Level12`), and max zoom
-— find them in the GIBS [Visualization Product Catalog](https://gibs.earthdata.nasa.gov).
+its `TileMatrixSet` (e.g. `GoogleMapsCompatible_Level12`), max zoom, and
+advertised `format` — find them in the GIBS [Visualization Product Catalog](https://gibs.earthdata.nasa.gov).
 `time: true` products take a `TIME=YYYY-MM-DD` query param (set via the
 date picker).

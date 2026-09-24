@@ -4,10 +4,10 @@
   const WMTS_BASE = 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi';
 
   const LAYERS = [
-    { key: 'modis',   layer: 'MODIS_Terra_CorrectedReflectance_TrueColor',            tms: 'GoogleMapsCompatible_Level9',  max: 9,  time: true },
-    { key: 'viirs',   layer: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',             tms: 'GoogleMapsCompatible_Level9',  max: 9,  time: true },
-    { key: 'landsat', layer: 'Landsat_WELD_CorrectedReflectance_TrueColor_Global_Annual', tms: 'GoogleMapsCompatible_Level12', max: 12, time: false },
-    { key: 'srtm',    layer: 'SRTM_Color_Index',                                       tms: 'GoogleMapsCompatible_Level12', max: 12, time: false }
+    { key: 'modis',   layer: 'MODIS_Terra_CorrectedReflectance_TrueColor',            tms: 'GoogleMapsCompatible_Level9',  max: 9,  time: true,  format: 'image/jpeg' },
+    { key: 'viirs',   layer: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',             tms: 'GoogleMapsCompatible_Level9',  max: 9,  time: true,  format: 'image/jpeg' },
+    { key: 'landsat', layer: 'Landsat_WELD_CorrectedReflectance_TrueColor_Global_Annual', tms: 'GoogleMapsCompatible_Level12', max: 12, time: false, format: 'image/jpeg' },
+    { key: 'srtm',    layer: 'SRTM_Color_Index',                                       tms: 'GoogleMapsCompatible_Level12', max: 12, time: false, format: 'image/png' }
   ];
 
   let viewer;
@@ -30,7 +30,7 @@
       url: layerUrl(cfg),
       layer: cfg.layer,
       style: '',
-      format: 'image/jpeg',
+      format: cfg.format,
       tileMatrixSetID: cfg.tms,
       maximumLevel: cfg.max,
       tileWidth: 256,
