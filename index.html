@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satellite imagery over DEM terrain — NASA GIBS + Cesium</title>
+<script src="https://unpkg.com/cesium@1.145.0/Build/Cesium/Cesium.js"></script>
+<link href="https://unpkg.com/cesium@1.145.0/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<style>
+  html, body { margin: 0; height: 100%; font-family: ui-sans-serif, system-ui, sans-serif; }
+  #cesiumContainer { position: absolute; inset: 0; }
+  #err {
+    position: absolute; bottom: 12px; left: 12px; z-index: 20; display: none;
+    background: #3a1016; color: #ffd9dd; border: 1px solid #7a2230; border-radius: 8px;
+    padding: 8px 12px; font-size: 12px; max-width: 60%; white-space: pre-wrap;
+    font-family: ui-monospace, monospace;
+  }
+  #panel {
+    position: absolute; top: 12px; right: 12px; width: 268px; z-index: 10;
+    background: rgba(15, 20, 30, 0.86); color: #dbe4f0; border-radius: 10px;
+    padding: 12px 14px; font-size: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    max-height: calc(100vh - 24px); overflow-y: auto;
+  }
+  #panel h1 { font-size: 13px; margin: 0 0 2px; color: #fff; letter-spacing: .3px; }
+  #panel .sub { color: #8fa3bd; margin: 0 0 10px; }
+  #panel .row { margin: 8px 0; }
+  #panel label { display: block; margin-bottom: 4px; color: #a9bcd2; }
+  #panel input[type=date] {
+    background: #101b2b; color: #dbe4f0; border: 1px solid #2a3b55;
+    border-radius: 6px; padding: 5px 8px; width: 100%; box-sizing: border-box;
+  }
+  .layer { padding: 7px 0; border-top: 1px solid #22314a; }
+  .layer:first-of-type { border-top: none; }
+  .layer label { display: flex; align-items: flex-start; gap: 7px; cursor: pointer; color: #dbe4f0; }
+  .layer label .res { margin-left: auto; color: #6f84a0; font-size: 10px; padding-top: 1px; }
+  .layer input[type=range] { width: 100%; margin-top: 6px; accent-color: #4c9aff; }
+  .places { border-top: 1px solid #22314a; margin-top: 10px; padding-top: 10px; }
+  .places button {
+    background: #16243a; color: #cfe0f5; border: 1px solid #2a3b55;
+    border-radius: 6px; padding: 4px 9px; margin: 0 4px 6px 0; cursor: pointer; font-size: 11px;
+  }
+  .places button:hover { background: #1c3060; }
+  .legend { border-top: 1px solid #22314a; margin-top: 8px; padding-top: 8px; color: #7d93b0; line-height: 1.5; }
+  .legend b { color: #b7c8dd; }
+  .credit { margin-top: 6px; color: #5c6f8c; font-size: 10px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div id="cesiumContainer"></div>
+<div id="err"></div>
+<div id="panel">
+  <h1>Satellite imagery on DEM terrain</h1>
+  <p class="sub">Live NASA GIBS layers draped on real 3D elevation (SRTM-based)</p>
+  <div class="row">
+    <label for="dateInput">Satellite imagery date (MODIS / VIIRS)</label>
+    <input type="date" id="dateInput">
+  </div>
+  <div class="layers">
+    <div class="layer">
+      <label><input type="checkbox" id="chk-modis" checked>MODIS Terra · True Color<span class="res">250 m</span></label>
+      <input type="range" id="op-modis" min="0" max="100" value="100">
+    </div>
+    <div class="layer">
+      <label><input type="checkbox" id="chk-viirs" checked>VIIRS SNPP · True Color<span class="res">375 m</span></label>
+      <input type="range" id="op-viirs" min="0" max="100" value="100">
+    </div>
+    <div class="layer">
+      <label><input type="checkbox" id="chk-landsat" checked>Landsat WELD · Annual mosaic<span class="res">30 m</span></label>
+      <input type="range" id="op-landsat" min="0" max="100" value="100">
+    </div>
+    <div class="layer">
+      <label><input type="checkbox" id="chk-srtm" checked>SRTM DEM · Elevation color index<span class="res">30 m</span></label>
+      <input type="range" id="op-srtm" min="0" max="100" value="100">
+    </div>
+  </div>
+  <div class="places">
+    <button data-lon="-112.045" data-lat="36.060" data-h="45000" data-pitch="-40">Grand Canyon</button>
+    <button data-lon="86.925" data-lat="27.988" data-h="42000" data-pitch="-40">Everest</button>
+    <button data-lon="7.658" data-lat="45.976" data-h="26000" data-pitch="-45">Matterhorn</button>
+    <button data-lon="-70.010" data-lat="-32.653" data-h="50000" data-pitch="-40">Aconcagua</button>
+    <button data-lon="37.355" data-lat="-3.076" data-h="50000" data-pitch="-40">Kilimanjaro</button>
+    <button data-lon="-151.006" data-lat="63.069" data-h="52000" data-pitch="-40">Denali</button>
+    <button data-lon="138.727" data-lat="35.362" data-h="46000" data-pitch="-40">Mt Fuji</button>
+  </div>
+  <div class="legend">
+    <b>How to read this:</b> the 3D surface is real terrain built from a global
+    digital elevation model. Satellite layers (MODIS / VIIRS / Landsat) are the
+    "imagery"; the SRTM layer shows elevation tints — together they form a
+    satellite + topographic map. Drag opacity to blend.
+  </div>
+  <div class="credit">
+    Imagery: NASA GIBS. Terrain: Re:Earth Mapterhorn (quantized-mesh). Viewer: CesiumJS.
+  </div>
+  <script src="script.js"></script>
+</div>
+</body>
+</html>
