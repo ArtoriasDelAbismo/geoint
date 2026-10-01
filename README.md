@@ -49,3 +49,37 @@ its `TileMatrixSet` (e.g. `GoogleMapsCompatible_Level12`), max zoom, and
 advertised `format` — find them in the GIBS [Visualization Product Catalog](https://gibs.earthdata.nasa.gov).
 `time: true` products take a `TIME=YYYY-MM-DD` query param (set via the
 date picker).
+
+## Glossary
+
+Acronyms and jargon used in this project, in rough order of appearance.
+
+| Term | Stands for | What it means here |
+|---|---|---|
+| **GEOINT** | Geospatial Intelligence | Information gathered from imagery and geographic data. The project's name. |
+| **Earthdata** | — | NASA's portal for Earth science data. |
+| **GIBS** | Global Imagery Browse Services | NASA's service that turns satellite data into ready-to-display map tiles. Free, no API key. |
+| **WMTS** | Web Map Tile Service | A standard (from the OGC) for requesting a map as small square images ("tiles") by zoom level, row and column. |
+| **OGC** | Open Geospatial Consortium | The standards body behind WMTS, GeoTIFF and other geo formats. |
+| **TileMatrixSet** | — | WMTS term for the grid of tiles a layer uses, i.e. its tile size and zoom levels (e.g. `GoogleMapsCompatible_Level9` = up to zoom 9). |
+| **EPSG:3857** | European Petroleum Survey Group code 3857 | The "Web Mercator" map projection used by Google Maps, OpenStreetMap and the GIBS endpoint here. |
+| **MODIS** | Moderate Resolution Imaging Spectroradiometer | Camera-like instrument on NASA's **Terra** and **Aqua** satellites; photographs the whole Earth about daily at 250 m. |
+| **VIIRS** | Visible Infrared Imaging Radiometer Suite | MODIS's successor instrument, at 375 m. |
+| **SNPP** | Suomi National Polar-orbiting Partnership | The satellite that carries the VIIRS used here. |
+| **Corrected Reflectance / True Color** | — | Imagery processed so it looks like a natural-color photo (red, green and blue bands). |
+| **Landsat** | Land + satellite (not an acronym) | NASA/USGS satellite series imaging Earth at 30 m since 1972. |
+| **WELD** | Web-Enabled Landsat Data | Project that combined many Landsat scenes into cloud-free mosaics. Static archive. |
+| **SRTM** | Shuttle Radar Topography Mission | Space Shuttle radar mission (Feb 2000) that measured the height of nearly all land on Earth. |
+| **DEM** | Digital Elevation Model | A grid of ground heights. It's what turns the flat imagery into 3D mountains and valleys. |
+| **Color index** | — | A DEM rendered as colors (e.g. green low, brown/white high) so elevation is visible on a 2D map. |
+| **Quantized-mesh** | — | Compact terrain-tile format Cesium uses to stream 3D ground shape. |
+| **CesiumJS** | — | Open-source JavaScript library for 3D globes and maps in the browser. |
+| **CDN** | Content Delivery Network | Servers that host files (like Cesium) close to users; the page loads them from there instead of from `node_modules`. |
+| **GDAL** | Geospatial Data Abstraction Library | The standard toolkit for reading and converting raster and vector geo files. |
+| **rasterio** | — | Python library built on GDAL for working with raster files. |
+| **GeoTIFF** | Geographic TIFF | A TIFF image with embedded coordinates, so software knows where on Earth each pixel is. |
+| **Sentinel-2** | — | European (Copernicus) satellites imaging land at 10 m. |
+| **Copernicus** | — | The European Union's Earth observation program; also publishes a global DEM. |
+| **GIS** | Geographic Information System | Software for viewing and analyzing map data. |
+| **QGIS** | Quantum GIS | Free desktop GIS application. |
+| **MapLibre GL / Leaflet** | — | JavaScript libraries for 2D web maps, alternatives to Cesium. |
